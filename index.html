@@ -1,0 +1,1294 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>城市更新权益保障平台（演示版）</title>
+<link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCA2NCA2NCc+PHJlY3Qgd2lkdGg9JzY0JyBoZWlnaHQ9JzY0JyByeD0nMTUnIGZpbGw9JyMxRTVBQTgnLz48cmVjdCB4PScxMScgeT0nMzAnIHdpZHRoPScxMicgaGVpZ2h0PScyMicgcng9JzInIGZpbGw9JyNmZmZmZmYnIG9wYWNpdHk9Jy44NScvPjxyZWN0IHg9JzI2JyB5PScxOScgd2lkdGg9JzEyJyBoZWlnaHQ9JzMzJyByeD0nMicgZmlsbD0nI2ZmZmZmZicvPjxyZWN0IHg9JzQxJyB5PSczNCcgd2lkdGg9JzEyJyBoZWlnaHQ9JzE4JyByeD0nMicgZmlsbD0nI2ZmZmZmZicgb3BhY2l0eT0nLjY1Jy8+PHJlY3QgeD0nMjknIHk9JzI0JyB3aWR0aD0nMi42JyBoZWlnaHQ9JzIuNicgZmlsbD0nIzFFNUFBOCcvPjxyZWN0IHg9JzMzLjQnIHk9JzI0JyB3aWR0aD0nMi42JyBoZWlnaHQ9JzIuNicgZmlsbD0nIzFFNUFBOCcvPjxyZWN0IHg9JzI5JyB5PSczMCcgd2lkdGg9JzIuNicgaGVpZ2h0PScyLjYnIGZpbGw9JyMxRTVBQTgnLz48cmVjdCB4PSczMy40JyB5PSczMCcgd2lkdGg9JzIuNicgaGVpZ2h0PScyLjYnIGZpbGw9JyMxRTVBQTgnLz48cmVjdCB4PScyOScgeT0nMzYnIHdpZHRoPScyLjYnIGhlaWdodD0nMi42JyBmaWxsPScjMUU1QUE4Jy8+PHJlY3QgeD0nMzMuNCcgeT0nMzYnIHdpZHRoPScyLjYnIGhlaWdodD0nMi42JyBmaWxsPScjMUU1QUE4Jy8+PC9zdmc+">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}https://hongyan-platform.pages.d
+html,body{height:100%}
+body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue","Microsoft YaHei",sans-serif;background:#E4E9F2;display:flex;align-items:center;justify-content:center;color:#1F2937;font-size:14px;line-height:1.5}
+#wrap{position:relative;width:390px;height:100vh;max-width:100vw;background:#F5F7FA;overflow:hidden;display:flex;flex-direction:column}
+@media(min-width:500px){#wrap{height:calc(100vh - 48px);border-radius:26px;box-shadow:0 14px 48px rgba(23,37,84,.20)}}
+#hdr{height:46px;background:#1E5AA8;color:#fff;display:flex;align-items:center;position:relative;flex:0 0 46px;z-index:5}
+#back{position:absolute;left:12px;font-size:22px;cursor:pointer;padding:8px 10px;display:none;color:#fff}
+#title{flex:1;text-align:center;font-size:16px;font-weight:600;margin:0 48px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#view{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch}
+#tabbar{height:60px;background:#fff;border-top:1px solid #E8ECF3;display:none;flex:0 0 60px;padding-bottom:env(safe-area-inset-bottom)}
+.tab{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#8A94A6;font-size:11px;cursor:pointer;gap:3px}
+.tab .ico{font-size:19px;line-height:1}
+.tab.on{color:#1E5AA8;font-weight:600}
+.body-pad{padding:16px 16px 84px}
+.card{background:#fff;border-radius:12px;padding:16px;margin-bottom:14px;box-shadow:0 1px 4px rgba(17,24,39,.05)}
+.card-title{font-size:15px;font-weight:600;display:flex;align-items:center;margin-bottom:12px}
+.card-title>span{flex:1}
+.more{font-size:12px;color:#8A94A6;font-weight:400;flex:0 0 auto}
+.grow{flex:1}
+.between{display:flex;align-items:center;justify-content:space-between}
+.hint{font-size:12px;color:#8A94A6}
+.link{font-size:12px;color:#1E5AA8;cursor:pointer}
+.footnote{font-size:11px;color:#B4BCC9;text-align:center;padding:16px 24px 6px}
+.row{display:flex;align-items:center}
+
+.tag{display:inline-block;font-size:11px;line-height:1;padding:5px 9px;border-radius:999px;background:#E5E7EB;color:#374151;white-space:nowrap}
+.tag.high{background:#FEE2E2;color:#DC2626}
+.tag.warn{background:#FEF3C7;color:#B45309}
+.tag.mid{background:#FEF3C7;color:#B45309}
+.tag.low{background:#DBEAFE;color:#2563EB}
+.tag.info{background:#EAF1FA;color:#1E5AA8}
+.tag.ok{background:#DCFCE7;color:#16A34A}
+.tag.gray{background:#F3F4F6;color:#6B7280}
+.tag.light{background:rgba(255,255,255,.22);color:#fff}
+
+.btn{display:block;width:100%;padding:13px;border:none;border-radius:12px;background:#1E5AA8;color:#fff;font-size:15px;font-weight:600;cursor:pointer;margin-top:12px;text-align:center}
+.btn:active{opacity:.85}
+.btn.ghost{background:#fff;color:#1E5AA8;border:1px solid #BFD2EC}
+.btn[disabled]{background:#CBD5E1;color:#fff;cursor:not-allowed}
+
+.metric-grid{display:flex;flex-wrap:wrap;gap:12px}
+.metric{flex:1 1 44%;min-width:44%;background:#F8FAFF;border-radius:10px;padding:15px 14px}
+.metric .v{font-size:21px;font-weight:700;line-height:1.2}
+.metric .k{font-size:12px;color:#6B7280;margin-top:6px}
+.metric .d{font-size:11px;color:#9CA3AF;margin-top:3px}
+.c-orange{color:#B45309}.c-red{color:#DC2626}.c-blue{color:#2563EB}.c-green{color:#16A34A}
+
+.grid3{display:flex;gap:10px}
+.grid-item{flex:1;background:#F8FAFF;border-radius:10px;padding:14px 6px;text-align:center;font-size:13px;cursor:pointer}
+.grid-item:active{background:#EAF1FA}
+.gi-ico{font-size:22px;margin-bottom:6px}
+
+.chips{display:flex;gap:8px;padding:0 16px 12px;flex-wrap:wrap}
+.chip{padding:6px 16px;border-radius:999px;background:#fff;border:1px solid #E5E9F0;font-size:12px;color:#6B7280;cursor:pointer}
+.chip.on{background:#1E5AA8;color:#fff;border-color:#1E5AA8}
+
+.item{display:flex;align-items:center;gap:10px;padding:14px 0;border-bottom:1px solid #F3F4F6}
+.item:last-child{border-bottom:none}
+.i-no{width:22px;height:22px;border-radius:6px;background:#EAF1FA;color:#1E5AA8;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex:0 0 22px}
+.i-name{font-size:14px;font-weight:600}
+.i-sub{font-size:12px;color:#8A94A6;margin-top:3px}
+.i-tail{font-size:13px;font-weight:600;color:#1E5AA8;flex:0 0 auto}
+.mark{width:28px;height:28px;border-radius:8px;font-size:13px;display:flex;align-items:center;justify-content:center;color:#fff;flex:0 0 28px}
+.mark-high{background:#DC2626}.mark-mid{background:#F59E0B}.mark-low{background:#3B82F6}
+
+.banner{padding:26px 16px 14px;color:#fff}
+.b-t{font-size:21px;font-weight:700}
+.b-s{font-size:11px;opacity:.85;margin-top:7px}
+.b-tags{margin-top:12px;display:flex;gap:6px}
+.banner.merchant{background:linear-gradient(135deg,#1E5AA8 0%,#3B82F6 100%)}
+.banner.inv{background:linear-gradient(135deg,#1E5AA8 0%,#3B82F6 100%)}
+.banner.gov{background:linear-gradient(135deg,#174A87 0%,#1E5AA8 60%,#3B82F6 100%)}
+
+.rings-box{position:relative;width:300px;height:300px;margin:0 auto}
+.ring{position:absolute;border-radius:50%;border:1px dashed;display:flex;align-items:center;justify-content:center}
+.r-core{width:118px;height:118px;left:91px;top:91px;background:rgba(239,68,68,.10);border-color:#EF4444}
+.r-mid{width:214px;height:214px;left:43px;top:43px;background:rgba(245,158,11,.08);border-color:#F59E0B}
+.r-out{width:300px;height:300px;left:0;top:0;background:rgba(59,130,246,.05);border-color:#3B82F6}
+.center-block{width:64px;height:64px;border-radius:8px;background:#1F2937;color:#fff;font-size:13px;display:flex;align-items:center;justify-content:center}
+.pin{position:absolute;font-size:10px;color:#6B7280}
+.pin-1{right:6px;top:116px;color:#EF4444}
+.pin-2{right:-6px;top:76px;color:#B45309}
+.pin-3{right:-18px;top:40px;color:#3B82F6}
+.shop-dot{position:absolute;width:10px;height:10px;border-radius:50%;background:#EF4444;border:2px solid #fff;box-shadow:0 0 6px rgba(0,0,0,.25)}
+.legend{display:flex;gap:16px;margin-top:14px;justify-content:center}
+.lg{display:flex;align-items:center;gap:5px;font-size:11px;color:#6B7280}
+.dot-s{width:9px;height:9px;border-radius:50%}
+.legend .core{background:#EF4444}.legend .mid{background:#F59E0B}.legend .out{background:#3B82F6}
+
+.steps{display:flex;padding:6px 0}
+.step{flex:1;text-align:center;position:relative}
+.step .c{width:26px;height:26px;border-radius:50%;background:#E5E7EB;color:#9CA3AF;font-size:12px;line-height:26px;margin:0 auto}
+.step .l{font-size:11px;color:#9CA3AF;margin-top:6px}
+.step.done .c{background:#1E5AA8;color:#fff}
+.step.done .l{color:#1E5AA8}
+.step.on .c{background:#F59E0B;color:#fff}
+.step.on .l{color:#B45309;font-weight:600}
+.step::after{content:"";position:absolute;top:13px;left:50%;width:100%;height:2px;background:#E5E7EB}
+.step:first-child::after{display:none}
+.step.done::after{background:#1E5AA8}
+.step.on::after{background:#1E5AA8}
+
+.timeline{padding:4px 0}
+.tl-item{position:relative;padding:0 0 18px 22px}
+.tl-item:last-child{padding-bottom:4px}
+.tl-item::before{content:"";position:absolute;left:5px;top:8px;width:8px;height:8px;border-radius:50%;background:#D1D5DB}
+.tl-item::after{content:"";position:absolute;left:8px;top:20px;bottom:0;width:2px;background:#E5E7EB}
+.tl-item:last-child::after{display:none}
+.tl-item.on::before{background:#16A34A}
+.tl-item.on::after{background:#DCFCE7}
+.tl-item .t{font-size:14px;font-weight:600;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap}
+.tl-item .s{font-size:12px;color:#8A94A6;margin-top:4px}
+.tl-item .d{font-size:11px;color:#B4BCC9;margin-top:3px}
+
+.progress .track{height:8px;background:#E5EDF8;border-radius:999px;overflow:hidden}
+.progress .fill{height:100%;background:linear-gradient(90deg,#1E5AA8,#3B82F6);border-radius:999px}
+
+.seg{display:flex;background:#E9EDF4;border-radius:10px;padding:3px;margin-bottom:12px}
+.seg-item{flex:1;text-align:center;padding:8px;font-size:13px;color:#6B7280;border-radius:8px;cursor:pointer}
+.seg-item.on{background:#fff;color:#1E5AA8;font-weight:600;box-shadow:0 1px 3px rgba(17,24,39,.08)}
+
+.field{margin-bottom:12px}
+.field label{display:block;font-size:12px;color:#6B7280;margin-bottom:6px}
+.field input{width:100%;padding:10px 12px;border:1px solid #E5E9F0;border-radius:10px;font-size:14px;background:#FBFCFE}
+.field input:focus{outline:none;border-color:#1E5AA8}
+.slider{width:100%;accent-color:#1E5AA8;height:26px}
+.pick{border:1px solid #E5E9F0;border-radius:10px;overflow:hidden}
+.pick-item{padding:11px 12px;font-size:13px;border-bottom:1px solid #F3F4F6;cursor:pointer;display:flex;align-items:center;justify-content:space-between}
+.pick-item:last-child{border-bottom:none}
+.pick-item.on{background:#EAF1FA;color:#1E5AA8;font-weight:600}
+.up-grid{display:flex;gap:10px}
+.up-item{flex:1;background:#F8FAFF;border:1px dashed #C9D8EE;border-radius:10px;padding:14px 6px;text-align:center;font-size:11px;color:#6B7280;cursor:pointer}
+.up-item .up-ico{font-size:20px;display:block;margin-bottom:4px}
+
+.result-card{border:1.5px solid #1E5AA8}
+.level-row{display:flex;gap:14px;align-items:center}
+.level-badge{width:76px;height:76px;border-radius:50%;background:#FEF3C7;display:flex;flex-direction:column;align-items:center;justify-content:center;flex:0 0 76px}
+.level-v{font-size:22px;font-weight:700;color:#B45309}
+.level-k{font-size:9px;color:#B45309}
+.result-grid{display:flex;flex-wrap:wrap;gap:10px}
+.result-grid .metric{border-left:3px solid #E5E9F0}
+.result-grid .metric.o{border-color:#F59E0B}
+.result-grid .metric.r{border-color:#DC2626}
+.result-grid .metric.b{border-color:#3B82F6}
+.result-grid .metric.g{border-color:#16A34A}
+.compare-row{display:flex;gap:8px}
+.cp-item{flex:1;background:#F5F7FA;border-radius:8px;padding:12px;text-align:center}
+.cp-k{font-size:10px;color:#6B7280}
+.cp-v{font-size:17px;font-weight:700;margin-top:5px}
+
+.contact{display:flex;gap:12px}
+.avatar{width:50px;height:50px;border-radius:50%;background:#1E5AA8;color:#fff;font-size:17px;display:flex;align-items:center;justify-content:center;flex:0 0 50px}
+
+.total-card{background:linear-gradient(160deg,#F8FAFF 0%,#EEF4FF 100%);display:flex;flex-direction:column;align-items:center;padding-top:22px}
+.total-ring{width:168px;height:168px;border-radius:50%;background:conic-gradient(#1E5AA8 0 68%,#E5EDF8 68% 100%);display:flex;align-items:center;justify-content:center}
+.total-inner{width:126px;height:126px;border-radius:50%;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.total-v{font-size:20px;font-weight:800;color:#1E5AA8}
+.total-k{font-size:11px;color:#6B7280;margin-top:5px}
+
+.tbl{border:1px solid #E5E9F0;border-radius:10px;overflow:hidden}
+.tbl-row{display:flex}
+.tbl-head{background:#F5F7FA}
+.tbl-head .tc{font-size:11px;color:#6B7280;font-weight:600}
+.tc{flex:1;text-align:center;padding:10px 4px;font-size:12px}
+.c1{flex:1.4;text-align:left;padding-left:10px}
+.tbl .row{border-top:1px solid #EEF1F6}
+.tbl .row.best{background:#EFF6FF}
+.tbl .row.best .tc{color:#1E5AA8;font-weight:700}
+
+.pill{background:#EAF1FA;color:#1E5AA8;border-radius:8px;padding:9px 12px;font-size:13px;margin-bottom:8px}
+.pill:last-child{margin-bottom:0}
+
+.map-block{width:100%;border-radius:10px;overflow:hidden;border:1px solid #E5E9F0;background:#F8FAFF;line-height:0}
+
+.fund-total{background:linear-gradient(135deg,#1E5AA8 0%,#3B82F6 100%);color:#fff}
+.ft-v{font-size:30px;font-weight:800}
+.ft-k{font-size:12px;opacity:.85;margin-top:6px}
+
+.w-track{height:8px;background:#EEF1F6;border-radius:999px;margin-top:8px;overflow:hidden}
+.w-fill{height:100%;border-radius:999px}
+
+.me-card{display:flex;align-items:center;gap:12px}
+.me-avatar{width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#1E5AA8,#3B82F6);color:#fff;font-size:16px;font-weight:700;display:flex;align-items:center;justify-content:center;flex:0 0 56px}
+.me-name{font-size:17px;font-weight:700}
+.svc{display:flex;align-items:center;gap:10px;padding:11px 0;border-bottom:1px solid #F3F4F6}
+.svc:last-child{border-bottom:none}
+.svc-ico{font-size:18px}
+.svc-name{font-size:14px;font-weight:600}
+.chev{color:#C0C8D4;font-size:16px}
+.sub-mark{width:32px;height:32px;border-radius:8px;background:#EAF1FA;color:#1E5AA8;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;flex:0 0 32px}
+
+.toast{position:absolute;left:50%;top:44%;transform:translate(-50%,-50%);background:rgba(17,24,39,.8);color:#fff;font-size:13px;padding:10px 18px;border-radius:999px;z-index:99;white-space:nowrap}
+.mask{position:absolute;inset:0;background:rgba(17,24,39,.45);z-index:50;display:flex;align-items:center;justify-content:center}
+.modal{width:78%;background:#fff;border-radius:14px;padding:20px 18px 14px}
+.md-title{font-size:16px;font-weight:700;text-align:center}
+.md-content{font-size:13px;color:#6B7280;text-align:center;margin:12px 0 18px;line-height:1.6}
+.md-btns{display:flex;gap:10px}
+.md-btns .btn{margin-top:0}
+
+/* 身份选择页 */
+#role-page{position:relative;min-height:100%;background:#F5F7FA;display:flex;flex-direction:column}
+.role-hero{background:linear-gradient(150deg,#174A87 0%,#1E5AA8 55%,#3B82F6 100%);padding:62px 24px 172px;color:#fff;border-bottom-left-radius:8px;border-bottom-right-radius:8px;text-align:center}
+.role-hero h1{font-size:25px;font-weight:700;letter-spacing:1px}
+.role-hero p{font-size:12px;opacity:.85;margin-top:12px;letter-spacing:1.5px}
+.role-cards{margin:-128px 16px 0;position:relative}
+.role-card{display:flex;align-items:center;gap:16px;background:#fff;border-radius:14px;padding:23px 18px;margin-bottom:14px;box-shadow:0 4px 16px rgba(23,37,84,.10);cursor:pointer}
+.role-card:active{transform:scale(.985)}
+.role-ico{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:25px;flex:0 0 52px}
+.role-ico.m{background:#EAF1FA}.role-ico.i{background:#F5F3FF}.role-ico.g{background:#F0FDF4}
+.role-name{font-size:17px;font-weight:700}
+.role-arrow{color:#C0C8D4;font-size:18px}
+.guest-line{text-align:center;font-size:12px;color:#1E5AA8;margin:16px 0 28px;text-decoration:underline;cursor:pointer}
+.role-feats{display:flex;gap:10px;margin:0 16px}
+.feat{flex:1;background:#fff;border-radius:12px;padding:17px 8px;text-align:center;box-shadow:0 2px 10px rgba(23,37,84,.06)}
+.feat-ico{display:block;font-size:18px;color:#1E5AA8;margin-bottom:9px}
+.feat-t{display:block;font-size:13px;font-weight:700;color:#1F2937}
+.feat-s{display:block;font-size:10px;color:#8A94A6;margin-top:5px;line-height:1.4}
+.role-legal{font-size:10px;color:#B4BCC9;text-align:center;padding:24px 28px 20px;margin-top:auto}
+</style>
+</head>
+<body>
+<div id="wrap">
+  <header id="hdr">
+    <span id="back" data-act="back">‹ 返回</span>
+    <div id="title">城市更新权益保障</div>
+  </header>
+  <div id="view"></div>
+  <nav id="tabbar"></nav>
+</div>
+<script>
+/* ========== 演示数据（与小程序工程 mock-data 一致） ========== */
+var D = {
+  user: { name: '示例餐饮店（演示）', district: '洪楼1905', distance: 120, ring: '过渡圈', business: '餐饮', area: 85, monthlyRevenue: 62000 },
+  project: { name: '洪楼1905 城市更新项目', code: 'HL-1905（示例编号）', district: '历城区', phase: '主体施工', period: '约 6 个月', seal: '0.6', progress: 72, months: 4 },
+  accounts: {
+    investor: { name: '城投 · 更新项目部', org: '城投', owner: '项目负责人（演示）', scope: '洪楼1905 项目投资与成本管理' },
+    gov: { name: '城市更新办', org: '城市更新办', owner: '专班负责人（演示）', scope: '全市更新项目统筹 · 服务时间 9:00-18:00' }
+  },
+  eats: ['餐饮', '零售', '服务', '便利店', '其他'],
+  parcels: [
+    { name: '洪楼1905', district: '历城区' },
+    { name: '山大南路', district: '历城区' },
+    { name: '老商埠', district: '市中区' }
+  ],
+  notices: [
+    { title: '围挡范围调整公告', date: '近期', sub: '围挡范围调整 · 封闭度 0.6', tag: '施工中', cls: 'high' },
+    { title: '预留便道开放通知（早高峰）', date: '已开放', sub: '每日 7:00-9:00', tag: '已生效', cls: 'ok' },
+    { title: '片区水管改造停水通知', date: '本周内', sub: '22:00 至次日 6:00', tag: '预告', cls: 'info' },
+    { title: '下一阶段施工方案预告', date: '常态', sub: '下一阶段进入竣工期', tag: '常态', cls: 'gray' }
+  ],
+  timeline: [
+    { phase: '施工前', status: '完成', items: [{ t: '方案公示与商户告知', s: '片区商户逐户告知，留存告知单', done: true }, { t: '影响评估发布', s: '圈层划分与影响等级已发布至平台', done: true }] },
+    { phase: '施工中', status: '当前', items: [{ t: '主体施工', s: '围挡封闭度 0.6', done: true }, { t: '便道与客流导引', s: '按施工阶段动态开放预留便道', done: false }] },
+    { phase: '建成后', status: '待定', items: [{ t: '竣工验收与复业支持', s: '商户复业帮扶与经营恢复跟踪', done: false }] }
+  ],
+  rings: [
+    { name: '核心圈', range: '≤50m', max: 50, desc: '距围挡≤50m，客流影响最直接，通常配套定向回租或停业补贴。', cls: 'high' },
+    { name: '过渡圈', range: '50-200m', max: 200, desc: '50-200m，客流阶段性下滑，可申请纾困借款或租金支持。', cls: 'warn' },
+    { name: '外围圈', range: '>200m', max: 999999, desc: '>200m，影响较小，按实际损失审慎评估。', cls: 'low' }
+  ],
+  policies: [
+    { name: '经营损失纾困补贴', tag: '纾困补贴', cls: 'info', apply: true, desc: '过渡圈商户可申请月度经营补贴，覆盖客流下降造成的部分损失。', action: '去测算', to: 'calc' },
+    { name: '租金缓缴与租金支持', tag: '租金支持', cls: 'info', apply: true, desc: '施工期租金缓缴政策，符合条件的商户按业态给予租金减免支持。', action: '查看详情', to: 'policyDetail' },
+    { name: '平价铺位与定向回租', tag: '定向回租', cls: 'info', apply: false, desc: '核心圈商户优先获得改造后平价铺位或定向回租权益。', action: '政策解读', to: '' },
+    { name: '停业补贴', tag: '停业补贴', cls: 'info', apply: false, desc: '围挡封闭导致停业的商户，按核定的经营损失给予一次性补贴。', action: '政策解读', to: '' }
+  ],
+  policyDetail: {
+    title: '城市更新施工期租金缓缴与支持办法',
+    docNo: '（示例文号 · 演示数据，非真实文件）',
+    scope: '片区更新项目围挡范围内外 200 米以内、持有效营业执照并在营的商户。',
+    items: [
+      { name: '租金缓缴', desc: '施工期内可申请缓缴最长 6 个月', tail: '按业态' },
+      { name: '租金减免', desc: '过渡圈商户按受影响等级减免 10%-30%', tail: '按月' },
+      { name: '配套支持', desc: '装修免租期、导流活动资源优先支持', tail: '配套' }
+    ],
+    conditions: ['营业执照经营地址位于项目 200 米影响范围内', '连续经营满 6 个月', '无欠租、无经营异常记录', '配合完成影响评估信息采集']
+  },
+  compare: [
+    { name: '同圈层餐饮平均降幅', v: '22%', color: '#B45309' },
+    { name: '同圈层餐饮闭店率', v: '11%', color: '#DC2626' },
+    { name: '同圈层中位经营损失', v: '¥1.4万/月', color: '#1E5AA8' }
+  ],
+  contact: { name: '李专员（演示）', dept: '城市更新办', scope: '负责辖区商户协商 · 服务时间 9:00-18:00', phone: '0531-0000-0000（演示）' },
+  appeals: [
+    { type: '诉', title: '申请经营损失补贴加速审核', sub: '近期提交给城市更新办', tag: '处理中', cls: 'warn' },
+    { type: '协', title: '关于便道开放时间的协商', sub: '已达成一致', tag: '已完成', cls: 'ok' }
+  ],
+  applySteps: ['已提交', '资格核验', '审批中', '拨付'],
+  applyProgress: [
+    { t: '审批中', s: '今日 街道初审通过，报送片区管委会', done: true },
+    { t: '资格核验通过', s: '昨日 营业执照与经营流水核验无误', done: true },
+    { t: '申请已提交', s: '2 天前 材料齐全，进入审核队列', done: true }
+  ],
+  invStats: [
+    { v: '156', k: '受影响商户', c: 'c-blue' },
+    { v: '23', k: '高风险商户', c: 'c-red' },
+    { v: '¥412万', k: '预计补偿', c: 'c-orange' },
+    { v: '67%', k: '协商完成率', c: 'c-green' }
+  ],
+  riskTop: [
+    { n: '1', name: '餐饮商户A · 核心圈', s: '业态：餐饮 · 距围挡 28m', loss: '年损≈28万', c: '#DC2626' },
+    { n: '2', name: '餐饮商户B · 核心圈', s: '业态：餐饮 · 距围挡 41m', loss: '年损≈21万', c: '#DC2626' },
+    { n: '3', name: '便利店商户C · 过渡圈', s: '业态：便利店 · 距围挡 62m', loss: '年损≈9万', c: '#DC2626' }
+  ],
+  industryRisk: [
+    { name: '餐饮（58 户）', s: '高风险 12 · 中风险 19 · 低风险 27', tail: '权重最高', c: '#DC2626' },
+    { name: '零售（44 户）', s: '高风险 6 · 中风险 12 · 低风险 26', tail: '影响中', c: '#B45309' },
+    { name: '服务/便利店（54 户）', s: '高风险 5 · 中风险 10 · 低风险 39', tail: '影响较低', c: '#3B82F6' }
+  ],
+  costTotal: { v: '¥412.6 万', range: '预算区间 ¥380-450 万', ratio: 68, conf: '置信度：中高' },
+  costItems: [
+    { name: '经营损失补偿', s: '按预估损失区间中位数计算', tail: '¥286万' },
+    { name: '定向回租/平价铺位', s: '核心圈 9 户优先安排', tail: '¥78万' },
+    { name: '引导与配套', s: '便道、导流、宣传等', tail: '¥48万' }
+  ],
+  costShare: [
+    { k: '投资方', v: '60%', sub: '≈¥247万', cls: 'c-blue' },
+    { k: '政府', v: '30%', sub: '≈¥124万', cls: 'c-orange' },
+    { k: '房东', v: '10%', sub: '≈¥41万', cls: 'c-gray' }
+  ],
+  toolsCompare: [
+    { name: '分段施工', cost: '¥368', close: '9.2%', stay: '88%', time: '+3月' },
+    { name: '预留便道', cost: '¥288', close: '12.4%', stay: '81%', time: '+1月' },
+    { name: '定向回租', cost: '¥412', close: '7.8%', stay: '91%', time: '持平' },
+    { name: '组合（推荐）', cost: '¥396', close: '8.1%', stay: '90%', time: '+1.5月', best: true }
+  ],
+  ledgerStats: [{ v: '156', k: '总商户' }, { v: '104', k: '已协商' }, { v: '33', k: '未协商' }, { v: '19', k: '协商中' }],
+  ledger: [
+    { cls: 'high', mark: '高', name: '餐饮商户A · 核心圈', s: '餐饮 · 预估损失 ¥28万/年', tag: '未协商', tagCls: 'warn' },
+    { cls: 'high', mark: '高', name: '餐饮商户B · 核心圈', s: '餐饮 · 预估损失 ¥21万/年', tag: '协商中', tagCls: 'warn' },
+    { cls: 'mid', mark: '中', name: '便利店商户C · 过渡圈', s: '便利店 · 预估损失 ¥9万/年', tag: '已签约', tagCls: 'ok' },
+    { cls: 'mid', mark: '中', name: '零售商户D · 过渡圈', s: '零售 · 预估损失 ¥7万/年', tag: '未协商', tagCls: 'warn' },
+    { cls: 'low', mark: '低', name: '零售商户E · 外围圈', s: '零售 · 预估损失 ¥1.2万/年', tag: '已签约', tagCls: 'ok' }
+  ],
+  govMetrics: [
+    { k: '受影响商户', v: '1,284', d: '环比 +3.2%', cls: 'c-blue' },
+    { k: '全市闭店率', v: '4.8%', d: '较上月 -0.3pp', cls: 'c-red' },
+    { k: '权益保障指数', v: '86.4', d: '目标 ≥85', cls: 'c-orange' },
+    { k: '协商完成率', v: '71.2%', d: '目标 ≥70%', cls: 'c-green' }
+  ],
+  govProjects: [
+    { n: '1', name: '洪楼1905 城市更新项目', s: '历城区 · 商户 156 · 施工中', tag: '施工中', cls: 'warn' },
+    { n: '2', name: '山大南路更新项目', s: '历城区 · 商户 89 · 协商期', tag: '协商期', cls: 'info' },
+    { n: '3', name: '老商埠更新项目', s: '市中区 · 商户 214 · 建成复业', tag: '建成', cls: 'ok' }
+  ],
+  warnings: [
+    { mark: '危', name: '高风险商户超时未协商（9 户）', s: '洪楼1905 · 超 15 天', tag: '超时', cls: 'high' },
+    { mark: '警', name: '补偿申请积压（34 件）', s: '平均审批 6.2 个工作日', tag: '关注', cls: 'warn' }
+  ],
+  fundEdges: ['拨付计划（本季度）', '资金使用公示（本月）'],
+  fundRows: [
+    { name: '洪楼1905 · 第 3 批补偿款', s: '¥86万 · 涉及商户 34 户', tag: '审批中', cls: 'warn' },
+    { name: '老商埠 · 第 2 批补偿款', s: '¥42万 · 涉及商户 18 户', tag: '已拨付', cls: 'ok' }
+  ],
+  sandboxMetrics: [
+    { k: '预测闭店率', v: '6.9%', d: '较单政策 -2.5pp', cls: 'c-red' },
+    { k: '商户留存率', v: '92.1%', d: '施工期结束', cls: 'c-green' },
+    { k: '年度财政成本', v: '¥1.28亿', d: '辖区合计', cls: 'c-orange' },
+    { k: '权益保障指数', v: '88.1', d: '预计提升 +1.7', cls: 'c-blue' }
+  ],
+  watchStats: [
+    { n: '1', name: '补偿/补贴类（62 件）', s: '占比 48% · 环比 +6%', tail: '48%', c: 'c-blue' },
+    { n: '2', name: '施工影响类（34 件）', s: '占比 27% · 环比 -2%', tail: '27%', c: 'c-orange' },
+    { n: '3', name: '政策咨询类（32 件）', s: '占比 25% · 环比 +1%', tail: '25%', c: 'c-green' }
+  ],
+  watchRank: [
+    { n: '1', name: 'A街道', s: '协商完成率 94%', tag: '优秀', cls: 'ok' },
+    { n: '2', name: 'B街道', s: '协商完成率 82%', tag: '良好', cls: 'info' },
+    { n: '3', name: 'C街道', s: '协商完成率 67% · 低于目标 70%', tag: '需改进', cls: 'high' }
+  ],
+  subscriptions: [
+    { mark: '施', name: '施工变更提醒（已订阅）', s: '围挡调整、停水停电、便道开放', tag: '已开启', cls: 'ok' },
+    { mark: '审', name: '审批进度通知（已订阅）', s: '补偿申请状态变更', tag: '已开启', cls: 'ok' },
+    { mark: '协', name: '协商提醒', s: '协商邀约与进度更新', tag: '去设置', cls: 'gray' }
+  ],
+  newsList: [
+    { t: '你的补偿申请已进入审批环节', s: '今日 · 街道初审通过', tag: '未读', cls: 'warn', roles: ['merchant'] },
+    { t: '预留便道开放通知（早高峰）', s: '近期 · 每日 7:00-9:00', tag: '已读', cls: 'gray', roles: ['merchant'] },
+    { t: '片区水管改造停水通知', s: '本周内 · 22:00-次日6:00', tag: '已读', cls: 'gray', roles: ['merchant'] }
+  ]
+};
+
+/* ========== 视图状态与页面注册 ========== */
+var S = { role: null, stack: [], user: null, apply: null };
+var P = {};
+
+function f(v){ return (v==null?'':String(v)) }
+function tagHtml(cls, text){ return '<span class="tag ' + cls + '">' + text + '</span>' }
+function metricHtml(v, k, d, cls){ return '<div class="metric"><div class="v ' + (cls||'') + '">' + v + '</div><div class="k">' + k + '</div>' + (d?'<div class="d">' + d + '</div>':'') + '</div>' }
+function esc(s){
+  var t = String(s == null ? '' : s), map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }, out = '';
+  for (var i = 0; i < t.length; i++) { var c = t.charAt(i); out += (map[c] || c) }
+  return out;
+}
+
+/* ========== 外溢效应评估模型（演示标定） ==========
+   依据 PRD 3.2.3：距离圈层 40% + 业态敏感度 30% + 围挡封闭度 30%。
+   标定基准：过渡圈 + 餐饮 + 封闭度 0.6 → 营业额降幅 18%-28%（与平台原有展示一致）。
+   注意：以下系数为演示标定值，非真实评估口径。 */
+var RING_IDX = { '核心圈': 1.00, '过渡圈': 0.55, '外围圈': 0.20 };
+/* 业态敏感度由 D.industryRisk 的高风险占比归一化得出，与投资方端「业态风险分布」结论一致 */
+var BIZ_IDX = { '餐饮': 1.00, '零售': 0.70, '服务': 0.55, '便利店': 0.50, '其他': 0.45 };
+var W = { dist: 0.40, biz: 0.30, seal: 0.30 };
+var CLOSE_RANGE = { '高': '12-18%', '中': '8-12%', '低': '3-5%' };
+var RECOVER_RANGE = { '高': '3-6 个月', '中': '2-4 个月', '低': '1-2 个月' };
+
+function ringOf(dist){
+  var d = Number(dist) || 0;
+  for (var i = 0; i < D.rings.length; i++) if (d <= D.rings[i].max) return D.rings[i];
+  return D.rings[D.rings.length - 1];
+}
+
+/* 唯一计算入口：测算页与损失评估页共用，保证两页数字必然一致 */
+function assess(st){
+  var s = st || calcState;
+  var ring = ringOf(s.dist);
+  var rev = Number(s.rev) || 0;
+  var area = Number(s.area) || 0;
+  var seal = Number(D.project.seal) || 0;
+  var ri = RING_IDX[ring.name] || 0.20;
+  var bi = BIZ_IDX[s.biz] || 0.45;
+  var q = W.dist * ri + W.biz * bi + W.seal * seal;
+  var c = Math.round(Math.max(3, Math.min(50, 23 + (q - 0.70) * 90)));
+  var lo = Math.max(2, c - 5), hi = Math.min(55, c + 5);
+  var level = ring.name === '核心圈' ? '高' : ring.name === '过渡圈' ? '中' : '低';
+  var cls = ring.name === '核心圈' ? 'high' : ring.name === '过渡圈' ? 'warn' : 'low';
+  var loss = Math.round(rev * c / 100);
+  return {
+    ring: ring, level: level, cls: cls, q: q, ri: ri, bi: bi, seal: seal,
+    lo: lo, hi: hi, loss: loss,
+    lossLo: Math.round(rev * lo / 100), lossHi: Math.round(rev * hi / 100),
+    subLo: Math.round(loss * 0.40), subHi: Math.round(loss * 0.48),
+    close: CLOSE_RANGE[level], recover: RECOVER_RANGE[level],
+    perSqm: area > 0 ? Math.round(loss / area) : null,
+    biz: s.biz, dist: Number(s.dist) || 0
+  };
+}
+
+/* 测算页输入 → 回写当前用户档案，使首页/影响图/损失页/申请页同步 */
+function syncUser(){
+  if (!S.user || S.role !== 'merchant') return;
+  var r = ringOf(calcState.dist);
+  S.user.distance = Number(calcState.dist);
+  S.user.ring = r.name;
+  S.user.business = calcState.biz;
+  S.user.area = Number(calcState.area);
+  S.user.monthlyRevenue = Number(calcState.rev);
+}
+function moneyW(n){ var v = (n / 10000).toFixed(1); return (v.slice(-2) === '.0' ? v.slice(0, -2) : v) + '万' }
+
+/* ========== 示意图（纯 SVG 绘制，不依赖地图 API、不联网） ========== */
+/* 投资方端：风险分布 —— 围挡 + 三圈层 + 商户点位 */
+function mapSvgRisk(){
+  var pts = [
+    [62,58,'#DC2626'],[44,102,'#DC2626'],[88,146,'#F59E0B'],
+    [178,138,'#F59E0B'],[206,92,'#F59E0B'],[166,176,'#3B82F6'],
+    [216,148,'#3B82F6'],[198,40,'#3B82F6']
+  ], dots = '';
+  for (var i = 0; i < pts.length; i++) {
+    dots += '<circle cx="' + pts[i][0] + '" cy="' + pts[i][1] + '" r="4.2" fill="' + pts[i][2] + '" stroke="#fff" stroke-width="1.6"/>';
+  }
+  return '<svg viewBox="0 0 260 212" style="width:100%;height:auto;display:block">' +
+    '<defs>' +
+    '<pattern id="mkgA" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M20 0H0V20" fill="none" stroke="rgba(30,90,168,.09)" stroke-width="1"/></pattern>' +
+    '<pattern id="mkhA" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="7" stroke="#1F2937" stroke-width="2.4"/></pattern>' +
+    '</defs>' +
+    '<rect width="260" height="212" fill="#F8FAFF"/>' +
+    '<rect width="260" height="212" fill="url(#mkgA)"/>' +
+    '<circle cx="128" cy="108" r="97" fill="rgba(59,130,246,.05)" stroke="#3B82F6" stroke-width="1" stroke-dasharray="4 4"/>' +
+    '<circle cx="128" cy="108" r="64" fill="rgba(245,158,11,.07)" stroke="#F59E0B" stroke-width="1" stroke-dasharray="4 4"/>' +
+    '<circle cx="128" cy="108" r="34" fill="rgba(239,68,68,.10)" stroke="#EF4444" stroke-width="1" stroke-dasharray="4 4"/>' +
+    '<rect x="96" y="91" width="64" height="34" rx="4" transform="rotate(-18 128 108)" fill="url(#mkhA)" stroke="#1F2937" stroke-width="1.5"/>' +
+    '<text x="128" y="21" font-size="9" fill="#3B82F6" text-anchor="middle">外围圈 &gt;200m</text>' +
+    '<text x="128" y="55" font-size="9" fill="#B45309" text-anchor="middle">过渡圈 50-200m</text>' +
+    '<text x="128" y="83" font-size="8" fill="#DC2626" text-anchor="middle">核心圈 ≤50m</text>' +
+    dots +
+    '</svg>';
+}
+
+/* 政府端：更新项目分布 —— 片区底图 + 项目点位 */
+function mapSvgProjects(){
+  var ps = [
+    { x: 74, y: 58, c: '#F59E0B', t: '洪楼1905' },
+    { x: 178, y: 84, c: '#3B82F6', t: '山大南路' },
+    { x: 118, y: 160, c: '#16A34A', t: '老商埠' }
+  ], g = '';
+  for (var i = 0; i < ps.length; i++) {
+    var p = ps[i];
+    g += '<circle cx="' + p.x + '" cy="' + p.y + '" r="7" fill="' + p.c + '" stroke="#fff" stroke-width="2.2"/>' +
+         '<circle cx="' + p.x + '" cy="' + p.y + '" r="2" fill="#fff"/>' +
+         '<text x="' + p.x + '" y="' + (p.y + 21) + '" font-size="9.5" fill="#374151" text-anchor="middle" font-weight="600">' + p.t + '</text>';
+  }
+  return '<svg viewBox="0 0 260 212" style="width:100%;height:auto;display:block">' +
+    '<defs><pattern id="mkgB" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M20 0H0V20" fill="none" stroke="rgba(30,90,168,.08)" stroke-width="1"/></pattern></defs>' +
+    '<rect width="260" height="212" fill="#F8FAFF"/>' +
+    '<ellipse cx="72" cy="62" rx="54" ry="44" fill="rgba(245,158,11,.09)"/>' +
+    '<ellipse cx="182" cy="86" rx="58" ry="48" fill="rgba(59,130,246,.09)"/>' +
+    '<ellipse cx="120" cy="164" rx="64" ry="42" fill="rgba(22,163,74,.09)"/>' +
+    '<path d="M0 118 H260" stroke="#E5EDF8" stroke-width="9"/>' +
+    '<path d="M126 0 V212" stroke="#E5EDF8" stroke-width="9"/>' +
+    '<path d="M0 118 H260" stroke="#fff" stroke-width="1"/>' +
+    '<path d="M126 0 V212" stroke="#fff" stroke-width="1"/>' +
+    '<rect width="260" height="212" fill="url(#mkgB)"/>' +
+    g +
+    '</svg>';
+}
+
+/* ===== 入口：身份选择 ===== */
+P.role = {
+  title: '城市更新权益保障',
+  tab: null,
+  html: function () {
+    return '<div id="role-page">' +
+      '<div class="role-hero"><h1>城市更新权益保障平台</h1><p>公平补偿 · 全程可查 · 协商有据 · 共建共赢</p></div>' +
+      '<div class="role-cards">' +
+      '<div class="role-card" data-act="choose" data-role="merchant"><div class="role-ico m">🏪</div><div class="grow"><div class="role-name">我是商户</div></div><div class="role-arrow">›</div></div>' +
+      '<div class="role-card" data-act="choose" data-role="investor"><div class="role-ico i">📈</div><div class="grow"><div class="role-name">我是投资方</div></div><div class="role-arrow">›</div></div>' +
+      '<div class="role-card" data-act="choose" data-role="gov"><div class="role-ico g">🏛</div><div class="grow"><div class="role-name">我是政府部门</div></div><div class="role-arrow">›</div></div>' +
+      '<div class="guest-line" data-act="choose" data-role="guest">游客模式 · 浏览公开信息</div>' +
+      '</div>' +
+      '<div class="role-feats">' +
+      '<div class="feat"><span class="feat-ico">◷</span><span class="feat-t">事前可预判</span><span class="feat-s">外溢效应评估模型</span></div>' +
+      '<div class="feat"><span class="feat-ico">◈</span><span class="feat-t">事中可协商</span><span class="feat-s">多方在线协商留痕</span></div>' +
+      '<div class="feat"><span class="feat-ico">✓</span><span class="feat-t">事后可补偿</span><span class="feat-s">申请审批拨付透明</span></div>' +
+      '</div>' +
+      '<div class="role-legal">本平台依据《个人信息保护法》进行最小化信息采集，仅用于权益评估与补偿办理。</div>' +
+      '</div>';
+  }
+};
+
+/* ===== 商户端 ===== */
+var bindName = '';
+var bindPhone = '';
+var bindDistrict = '洪楼1905';
+var CALC_DEFAULT = { biz: '餐饮', dist: 120, area: 85, rev: 62000 };
+var calcState = { biz: CALC_DEFAULT.biz, dist: CALC_DEFAULT.dist, area: CALC_DEFAULT.area, rev: CALC_DEFAULT.rev };
+
+/* 开始新会话：清空身份与测算状态，避免跨角色残留 */
+function newSession(role){
+  S.user = null; S.apply = null;
+  bindName = ''; bindPhone = ''; bindDistrict = '洪楼1905';
+  calcState = { biz: CALC_DEFAULT.biz, dist: CALC_DEFAULT.dist, area: CALC_DEFAULT.area, rev: CALC_DEFAULT.rev };
+  S.role = role;
+}
+/* 绑定提交：把输入的店名/手机号/片区 + 当前测算参数固化为用户档案 */
+function makeMerchantUser(){
+  return {
+    name: esc(bindName.trim()),
+    phone: bindPhone.trim(),
+    district: bindDistrict,
+    distance: Number(calcState.dist),
+    ring: ringOf(calcState.dist).name,
+    business: calcState.biz,
+    area: Number(calcState.area),
+    monthlyRevenue: Number(calcState.rev)
+  };
+}
+
+P.bind = {
+  title: '店铺绑定',
+  tab: null,
+  html: function () {
+    var r = ringOf(calcState.dist);
+    return '<div class="body-pad">' +
+      '<div class="card"><div class="card-title"><span>店铺信息</span></div>' +
+      '<div class="field"><label>店铺名称</label><input id="bindInput" placeholder="请输入店铺名称" value="' + esc(bindName) + '" data-input="bindName"></div>' +
+      '<div class="field"><label>手机号</label><input id="bindPhone" placeholder="请输入手机号" value="' + esc(bindPhone) + '" data-input="bindPhone"></div>' +
+      '<div class="field"><label>所属片区</label><div class="pick">' +
+      D.parcels.map(function (pc) {
+        var on = pc.name === bindDistrict;
+        return '<div class="pick-item' + (on ? ' on' : '') + '" data-act="pickDistrict" data-v="' + pc.name + '"><span>' + pc.name + '</span><span class="tag ' + (on ? 'info' : 'gray') + '">' + pc.district + '</span></div>';
+      }).join('') +
+      '</div><div class="hint" style="margin-top:8px">当前评估圈层：' + r.name + ' · ' + calcState.dist + 'm（可在「补偿测算」中调整）</div></div>' +
+      '<div class="field"><label>营业执照</label><div class="up-item" data-act="toast" data-tip="演示：调起相机/相册"><span class="up-ico">＋</span>上传营业执照</div></div>' +
+      '</div>' +
+      '<button class="btn" id="bindSubmit" data-act="submitBind"' + (bindName.trim() ? '' : ' disabled') + '>确认绑定</button>' +
+      '<div class="footnote">绑定后平台将依据外溢效应评估模型，为你展示施工影响与可申请的政策保障</div>' +
+      '</div>';
+  },
+  after: function () {
+    var old = document.querySelector('.toast');
+    if (old) old.remove();
+  }
+};
+
+P.marketHome = {
+  title: '商户首页',
+  tab: 'home',
+  html: function () {
+    var u = S.user || D.user;
+    var n = '<div class="banner merchant"><div class="b-t">' + u.name + '</div><div class="b-s">' + u.district + ' · ' + ringOf(u.distance).name + ' · 距围挡 ' + u.distance + 'm</div><div class="b-tags">' + tagHtml('light', '施工中') + tagHtml('light', '封闭度 ' + D.project.seal) + '</div></div>';
+    var grid = '<div class="card"><div class="card-title"><span>权益服务</span></div><div class="grid3">' +
+      '<div class="grid-item" data-act="go" data-page="calc"><div class="gi-ico">🧮</div>补偿测算</div>' +
+      '<div class="grid-item" data-act="go" data-page="policyList"><div class="gi-ico">📚</div>政策库</div>' +
+      '<div class="grid-item" data-act="go" data-page="loss"><div class="gi-ico">📊</div>损失评估</div>' +
+      '</div></div>';
+    var notices = '<div class="card"><div class="between"><div class="card-title" style="margin:0"><span>施工通知</span></div><span class="link" data-act="go" data-page="construction">查看全部 ›</span></div>' +
+      D.notices.slice(0, 2).map(function (it) {
+        return '<div class="item"><div style="flex:1"><div class="i-name" style="font-size:13px">' + it.title + '</div><div class="i-sub">' + it.date + ' · ' + it.sub + '</div></div>' + tagHtml(it.cls, it.tag) + '</div>';
+      }).join('') + '</div>';
+    var progress = '<div class="card"><div class="card-title"><span>施工进度</span></div>' +
+      '<div class="progress"><div class="track"><div class="fill" style="width:' + D.project.progress + '%"></div></div><div class="between" style="margin-top:6px"><span class="hint">已开工</span><span class="hint">预计竣工</span></div></div>' +
+      '<div style="margin-top:10px" class="hint">当前阶段：' + D.project.phase + ' · 施工期' + D.project.period + '</div></div>';
+    var map = '<div class="card" data-act="go" data-page="influenceMap" style="cursor:pointer"><div class="between"><div><div style="font-size:14px;font-weight:600">📌 我的影响范围</div><div class="hint" style="margin-top:4px">' + ringOf(u.distance).name + ' · 距离 ' + u.distance + 'm · 点击查看三圈层示意</div></div><span class="chev">›</span></div></div>';
+    return '<div class="body-pad">' + n + grid + notices + map + progress + '<div class="footnote">数据来自评估模型演示，正式环境以政府公示与台账为准</div></div>';
+  }
+};
+
+P.construction = {
+  title: '施工信息',
+  tab: 'construction',
+  html: function (c) {
+    var segOn = c.seg || 'list';
+    var body = '';
+    if (segOn === 'list') {
+      body = '<div class="card" data-act="go" data-page="influenceMap" style="cursor:pointer"><div class="between"><div><div style="font-size:14px;font-weight:600">🗺 影响范围图</div><div class="hint" style="margin-top:4px">三圈层划分与本店位置</div></div><span class="chev">›</span></div></div>' +
+        '<div class="card"><div class="card-title"><span>通知列表</span></div>' +
+        D.notices.map(function (it) {
+          return '<div class="item"><div style="flex:1"><div class="i-name" style="font-size:13px">' + it.title + '</div><div class="i-sub">' + it.date + ' · ' + it.sub + '</div></div>' + tagHtml(it.cls, it.tag) + '</div>';
+        }).join('') + '</div>';
+    } else {
+      body = D.timeline.map(function (ph) {
+        var items = ph.items.map(function (it) {
+          return '<div class="tl-item' + (it.done ? ' on' : '') + '"><div class="t">' + it.t + '</div><div class="s">' + it.s + '</div></div>';
+        }).join('');
+        return '<div class="card"><div class="between"><div class="card-title" style="margin:0"><span>' + ph.phase + '</span></div>' + tagHtml(ph.status === '当前' ? 'warn' : ph.status === '完成' ? 'ok' : 'gray', ph.status) + '</div><div class="timeline">' + items + '</div></div>';
+      }).join('');
+    }
+    return '<div class="body-pad"><div class="seg"><div class="seg-item' + (segOn === 'list' ? ' on' : '') + '" data-act="seg" data-v="list">通知列表</div><div class="seg-item' + (segOn === 'timeline' ? ' on' : '') + '" data-act="seg" data-v="timeline">进度时间轴</div></div>' + body + '</div>';
+  }
+};
+
+P.influenceMap = {
+  title: '影响范围图',
+  tab: null,
+  html: function () {
+    var ringList = D.rings.map(function (r) {
+      return '<div class="item"><span class="tag ' + r.cls + '">' + r.name + ' ' + r.range + '</span><div style="flex:1"><div style="font-size:12px;color:#6B7280">' + r.desc + '</div></div></div>';
+    }).join('');
+    return '<div class="body-pad">' +
+      '<div class="card"><div class="card-title"><span>三圈层影响范围</span></div>' +
+      '<div class="rings-box"><div class="ring r-out"></div><div class="ring r-mid"></div><div class="ring r-core"><div class="center-block">围挡</div></div>' +
+      '<span class="pin pin-1">核心圈</span><span class="pin pin-2">过渡圈</span><span class="pin pin-3">外围圈</span>' +
+      '<span class="shop-dot" style="left:120px;top:84px"></span><span class="shop-dot" style="left:64px;top:158px"></span></div>' +
+      '<div class="legend"><div class="lg"><span class="dot-s core"></span>核心圈 ≤50m</div><div class="lg"><span class="dot-s mid"></span>过渡圈 50-200m</div><div class="lg"><span class="dot-s out"></span>外围圈 &gt;200m</div></div></div>' +
+      '<div class="card"><div class="card-title"><span>圈层解读</span></div>' + ringList + '</div>' +
+      (S.role === 'guest' ? '' :
+        '<div class="card" style="background:#EAF1FA;border:1px solid #C9D8EE"><div class="between"><div><div style="font-size:13px;font-weight:600">我的店铺</div><div class="hint" style="margin-top:3px">' + ringOf(S.user.distance).name + ' · ' + S.user.distance + 'm · ' + S.user.business + '</div></div>' + tagHtml('info', ringOf(S.user.distance).name) + '</div></div>' +
+        '<button class="btn" data-act="go" data-page="calc">前往测算我的补偿</button>') +
+      '</div>';
+  }
+};
+
+P.policyList = {
+  title: '补偿政策库',
+  tab: 'policy',
+  html: function (c) {
+    var f = c.filter || '全部';
+    var chips = ['全部', '纾困补贴', '租金支持', '定向回租', '停业补贴'].map(function (x) {
+      return '<div class="chip' + (x === f ? ' on' : '') + '" data-act="filterPolicy" data-v="' + x + '">' + x + '</div>';
+    }).join('');
+    var list = D.policies.filter(function (p) { return f === '全部' || p.tag === f }).map(function (p) {
+      var act = p.to ? ' data-page="' + p.to + '"' : ' data-tip="政策解读即将上线"';
+      return '<div class="item" style="cursor:pointer" data-act="' + (p.to ? 'go' : 'toast') + '"' + act + '><div style="flex:1"><div class="between"><div class="i-name">' + p.name + '</div>' + tagHtml(p.cls, p.tag) + '</div><div class="i-sub" style="margin-top:4px">' + p.desc + '</div>' + (p.apply ? '<span class="link" style="margin-top:6px;display:inline-block">' + p.action + ' ›</span>' : '<span class="hint" style="margin-top:6px;display:inline-block">' + p.action + '</span>') + '</div></div>';
+    }).join('');
+    return '<div class="chips">' + chips + '</div><div class="body-pad" style="padding-top:0"><div class="card">' + (list || '<div class="hint">该分类下暂无政策</div>') + '</div></div>';
+  }
+};
+
+P.policyDetail = {
+  title: '政策详情',
+  tab: null,
+  html: function () {
+    var pd = D.policyDetail;
+    var items = pd.items.map(function (it) {
+      return '<div class="item"><div style="flex:1"><div class="i-name">' + it.name + '</div><div class="i-sub" style="margin-top:3px">' + it.desc + '</div></div><div class="i-tail">' + it.tail + '</div></div>';
+    }).join('');
+    var conds = pd.conditions.map(function (x, i) { return '<div class="tl-item"><div class="t"><span>' + (i + 1) + '. ' + x + '</span></div></div>'; }).join('');
+    return '<div class="body-pad">' +
+      '<div class="card"><div class="i-name" style="font-size:17px">' + pd.title + '</div><div class="hint" style="margin-top:6px">' + pd.docNo + '</div><div class="hint" style="margin-top:10px">适用范围：' + pd.scope + '</div></div>' +
+      '<div class="card"><div class="card-title"><span>支持内容</span></div>' + items + '</div>' +
+      '<div class="card"><div class="card-title"><span>申请条件</span></div><div class="timeline">' + conds + '</div></div>' +
+      '<div class="card"><div class="card-title"><span>媒体解读</span></div><div class="up-item" data-act="toast" data-tip="演示：视频/图文解读"><span class="up-ico">▶</span>点击播放政策解读</div></div>' +
+      '<button class="btn" data-act="go" data-page="calc">开始测算</button>' +
+      '</div>';
+  }
+};
+
+P.calc = {
+  title: '补偿测算',
+  tab: null,
+  html: function () {
+    var st = calcState;
+    var bizChips = D.eats.map(function (x) {
+      return '<div class="chip' + (x === st.biz ? ' on' : '') + '" data-act="biz" data-v="' + x + '">' + x + '</div>';
+    }).join('');
+    return '<div class="body-pad">' +
+      '<div class="card"><div class="card-title"><span>店铺信息</span></div>' +
+      '<div class="field"><label>经营范围</label><div class="chips" style="padding:0">' + bizChips + '</div></div>' +
+      '<div class="between" style="gap:10px"><div class="field grow"><label>面积（㎡）</label><input type="number" id="calcArea" value="' + st.area + '" data-input="calcArea"></div>' +
+      '<div class="field grow"><label>月均营业额（元）</label><input type="number" id="calcRev" value="' + st.rev + '" data-input="calcRev"></div></div>' +
+      '<div class="field"><label>距围挡距离（米）：<b id="calcDistVal" style="color:#1E5AA8">' + st.dist + 'm</b></label>' +
+      '<input type="range" class="slider" min="0" max="300" step="5" value="' + st.dist + '" data-range="calcDist"></div>' +
+      '</div>' +
+      '<div id="calcResult"></div>' +
+      '<div class="between" style="gap:10px"><button class="btn ghost" style="flex:1;margin-top:0" data-act="go" data-page="loss">查看损失明细</button><button class="btn" style="flex:1;margin-top:0" data-act="submitCalc">提交申请</button></div>' +
+      '<div class="footnote">测算结果仅作参考，实际以评估模型核定与协商为准</div>' +
+      '</div>';
+  },
+  after: function () { refreshCalc() }
+};
+
+function refreshCalc(){
+  var st = calcState;
+  var box = document.getElementById('calcResult');
+  if (!box) return;
+  var a = assess(st);
+  var nf = function (n) { return n.toLocaleString('zh-CN') };
+  box.innerHTML = '<div class="card result-card"><div class="between"><div class="card-title" style="margin:0"><span>测算结果</span></div><div>' + tagHtml(a.cls, '影响等级 ' + a.level) + ' ' + tagHtml('info', a.ring.name + ' ' + st.dist + 'm') + '</div></div>' +
+    '<div class="result-grid">' +
+    '<div class="metric r"><div class="v c-red">' + a.lo + '-' + a.hi + '%</div><div class="k">营业额降幅区间</div></div>' +
+    '<div class="metric o"><div class="v c-orange">' + a.close + '</div><div class="k">闭店概率</div></div>' +
+    '<div class="metric b"><div class="v c-blue">¥' + nf(a.loss) + ' /月</div><div class="k">月经营损失（预估）</div></div>' +
+    '<div class="metric g"><div class="v c-green">¥' + nf(a.subLo) + '-' + nf(a.subHi) + '</div><div class="k">可申请补贴（月）</div></div>' +
+    (a.perSqm ? '<div class="metric"><div class="v">' + nf(a.perSqm) + ' 元</div><div class="k">单位面积月损失</div><div class="d">按 ' + st.area + '㎡ 折算</div></div>' : '') +
+    '</div>' +
+    '<div class="hint" style="margin-top:10px">评估模型：距离圈层 ' + a.ri.toFixed(2) + '×40% + 业态敏感度 ' + a.bi.toFixed(2) + '×30% + 围挡封闭度 ' + a.seal.toFixed(2) + '×30% = ' + a.q.toFixed(2) + '（演示标定值）</div>' +
+    '<div class="hint" style="margin-top:6px">按评估模型口径：降幅率 × 月均营业额估算损失，补贴按损失 40%-48% 折算。正式核定以材料审核为准。</div>' +
+    '</div>';
+}
+
+P.loss = {
+  title: '损失评估',
+  tab: null,
+  html: function () {
+    var a = assess();
+    var ref = 14000;
+    var cmp = a.loss > ref * 1.15 ? '高于' : a.loss < ref * 0.85 ? '低于' : '接近';
+    return '<div class="body-pad">' +
+      '<div class="card result-card"><div class="card-title"><span>影响等级评估</span></div>' +
+      '<div class="level-row"><div class="level-badge"><div class="level-v">' + a.level + '</div><div class="level-k">风险等级</div></div>' +
+      '<div style="flex:1"><div class="row" style="flex-wrap:wrap;gap:6px;margin-bottom:8px">' + tagHtml('info', a.ring.name + ' · ' + a.dist + 'm') + tagHtml('gray', a.biz) + tagHtml('gray', '封闭度 ' + a.seal) + '</div>' +
+      '<div class="hint">依据距离圈层、业态敏感度与围挡封闭度三项加权计算（权重 40%/30%/30%）</div></div></div></div>' +
+      '<div class="card"><div class="card-title"><span>损失预估</span></div><div class="result-grid">' +
+      '<div class="metric o"><div class="v c-orange">' + a.lo + '-' + a.hi + '%</div><div class="k">营业额降幅区间</div><div class="d">较施工前基线</div></div>' +
+      '<div class="metric r"><div class="v c-red">' + a.close + '</div><div class="k">闭店概率</div><div class="d">同条件商户统计</div></div>' +
+      '<div class="metric b"><div class="v c-blue">¥' + moneyW(a.lossLo) + '-' + moneyW(a.lossHi) + '</div><div class="k">月经营损失</div><div class="d">按月均营业额推算</div></div>' +
+      '<div class="metric g"><div class="v c-green">' + a.recover + '</div><div class="k">预计恢复周期</div><div class="d">建成后客流回补</div></div>' +
+      '</div><div class="hint" style="margin-top:10px">以上为区间预估，实际以协商结果与核算为准。提供数字化报告或流水凭证可提高精度。</div></div>' +
+      '<div class="card"><div class="card-title"><span>历史对照</span><span class="more">数据来源：近期调研</span></div><div class="compare-row">' +
+      D.compare.map(function (cp) { return '<div class="cp-item"><div class="cp-k">' + cp.name + '</div><div class="cp-v" style="color:' + cp.color + '">' + cp.v + '</div></div>'; }).join('') +
+      '</div><div class="hint" style="margin-top:10px">你的预估损失' + cmp + '同圈层中位水平（¥1.4万/月），可作为协商参照基线。</div></div>' +
+      '<div class="between" style="gap:10px"><button class="btn ghost" style="flex:1;margin-top:0" data-act="go" data-page="calc">重新测算</button><button class="btn" style="flex:1;margin-top:0" data-act="go" data-page="apply">去申请</button></div>' +
+      '</div>';
+  }
+};
+
+P.consult = {
+  title: '协商申诉',
+  tab: null,
+  html: function () {
+    return '<div class="body-pad">' +
+      '<div class="card"><div class="card-title"><span>对接专班</span></div><div class="contact">' +
+      '<div class="avatar">专班</div><div style="flex:1"><div class="row" style="gap:8px"><div class="i-name">' + D.contact.name + '</div>' + tagHtml('info', '街道更新专员') + '</div>' +
+      '<div class="hint" style="margin-top:6px">' + D.contact.dept + ' · ' + D.contact.scope + '</div><div class="hint">电话：' + D.contact.phone + '（工作日 9:00-18:00）</div></div></div></div>' +
+      '<div class="card"><div class="card-title"><span>已提交诉求</span><span class="more">' + D.appeals.length + ' 条</span></div><div class="timeline">' +
+      D.appeals.map(function (a) {
+        return '<div class="tl-item"><div class="t"><span>' + a.title + '</span>' + tagHtml(a.cls, a.tag) + '</div><div class="s">' + a.sub + '</div></div>';
+      }).join('') + '</div></div>' +
+      '<div class="card"><div class="card-title"><span>政策依据</span></div><div class="hint">申请人对评估结果有异议的，可自收到结果之日起 5 个工作日内向专班提出复核申请；专班应在 10 个工作日内书面答复。（依据：城市更新补偿协商相关工作指引 · 条款为演示示意）</div></div>' +
+      '<button class="btn" data-act="go" data-page="apply">前往补偿申请</button>' +
+      '</div>';
+  }
+};
+
+/* 可申请政策 = 政策库中标记为可申请的项，避免申请页提供政策库自己标为不可申请的政策 */
+var APPLY_POLICIES = D.policies.filter(function (p) { return p.apply }).map(function (p) { return p.name });
+
+P.apply = {
+  title: '补偿申请',
+  tab: null,
+  html: function (c) {
+    var pIdx = c.policyIdx || 0;
+    var perIdx = c.periodIdx || 0;
+    var u = S.user || D.user;
+    return '<div class="body-pad">' +
+      '<div class="card"><div class="card-title"><span>申请信息</span></div>' +
+      '<div class="field"><label>申请人</label><input value="' + u.name + '" disabled style="background:#F3F4F6"></div>' +
+      '<div class="field"><label>申请政策</label><div class="pick">' +
+      APPLY_POLICIES.map(function (x, i) {
+        return '<div class="pick-item' + (i === pIdx ? ' on' : '') + '" data-act="pickApply" data-v="' + i + '"><span>' + x + '</span>' + (i === pIdx ? '✓' : '') + '</div>';
+      }).join('') + '</div></div>' +
+      '<div class="field"><label>申请周期</label><div class="pick">' +
+      ['当前施工期', '自定义周期'].map(function (x, i) {
+        return '<div class="pick-item' + (i === perIdx ? ' on' : '') + '" data-act="pickPeriod" data-v="' + i + '"><span>' + x + '</span>' + (i === perIdx ? '✓' : '') + '</div>';
+      }).join('') + '</div></div>' +
+      '<div class="field"><label>定位确认</label><div class="pick"><div class="pick-item on"><span>' + u.district + ' 片区 · ' + ringOf(u.distance).name + ' ' + u.distance + 'm</span></div></div></div>' +
+      '</div>' +
+      '<div class="card"><div class="card-title"><span>申请材料</span></div><div class="up-grid">' +
+      ['营业执照', '经营流水', '租金凭证'].map(function (m) {
+        return '<div class="up-item" data-act="toast" data-tip="演示：调起相机/相册"><span class="up-ico">＋</span>' + m + '</div>';
+      }).join('') + '</div></div>' +
+      '<button class="btn" data-act="submitApply">提交申请</button>' +
+      '<div class="footnote">提交后将进入审批流程，5 个工作日内反馈</div>' +
+      '</div>';
+  }
+};
+
+P.applyProgress = {
+  title: '申请进度',
+  tab: null,
+  html: function () {
+    var ap = S.apply || { policy: APPLY_POLICIES[0], quote: assess() };
+    var q = ap.quote;
+    var nf = function (n) { return n.toLocaleString('zh-CN') };
+    var steps = D.applySteps.map(function (s, i) {
+      return '<div class="step' + (i < 2 ? ' done' : (i === 2 ? ' on' : '')) + '"><div class="c">' + (i < 2 ? '✓' : (i + 1)) + '</div><div class="l">' + s + '</div></div>';
+    }).join('');
+    var tl = D.applyProgress.map(function (p) {
+      return '<div class="tl-item on"><div class="t">' + p.t + '</div><div class="s">' + p.s + '</div></div>';
+    }).join('');
+    return '<div class="body-pad">' +
+      '<div class="card"><div class="between"><div class="i-name" style="font-size:16px">' + ap.policy + '</div>' + tagHtml('warn', '审核中') + '</div><div class="hint" style="margin-top:6px">申请编号：示例编号（演示）</div></div>' +
+      '<div class="card"><div class="steps">' + steps + '</div><div class="hint" style="text-align:center;margin-top:12px">预计将为你拨付 ¥' + nf(q.subLo) + '-' + nf(q.subHi) + ' / 月（连续 ' + D.project.months + ' 个月）</div></div>' +
+      '<div class="card"><div class="card-title"><span>办理记录</span></div><div class="timeline">' + tl + '</div></div>' +
+      '<div class="card" style="background:#F0FDF4;border:1px solid #BBF7D0"><div class="hint" style="color:#166534">💡 如审批超 5 个工作日未反馈，平台将自动升级提醒，也可通过「协商申诉」发起催办。</div></div>' +
+      '<button class="btn ghost" data-act="go" data-page="consult">发起协商/催办</button>' +
+      '</div>';
+  }
+};
+
+/* ===== 投资方端 ===== */
+P.invHome = {
+  title: '项目总览',
+  tab: 'home',
+  html: function () {
+    var grid = '<div class="card"><div class="card-title"><span>管理工具</span></div><div class="grid3">' +
+      '<div class="grid-item" data-act="go" data-page="invMap"><div class="gi-ico">🗺</div>风险地图</div>' +
+      '<div class="grid-item" data-act="go" data-page="invCost"><div class="gi-ico">🧮</div>责任成本</div>' +
+      '<div class="grid-item" data-act="go" data-page="invTools"><div class="gi-ico">🧰</div>工具箱</div>' +
+      '</div></div>';
+    var stats = '<div class="card"><div class="card-title"><span>项目概况</span><span class="more">' + D.project.code + '</span></div><div class="metric-grid">' +
+      D.invStats.map(function (m) { return metricHtml(m.v, m.k, null, m.c) }).join('') +
+      '</div><div class="hint" style="margin-top:10px">商户台账较昨日 +3 条变更，数据每日同步。</div></div>';
+    var risk = '<div class="card"><div class="between"><div style="flex:1"><div style="font-size:14px;font-weight:600">⚠ 高风险商户预警</div><div class="hint" style="margin-top:4px">23 户待优先协商，其中 9 户超期未响应</div></div><span class="link" data-act="go" data-page="invMap">查看地图 ›</span></div></div>';
+    var cost = '<div class="card"><div class="between"><div style="flex:1"><div style="font-size:14px;font-weight:600">💰 责任成本测算</div><div class="hint" style="margin-top:4px">预算 ¥380-450 万 · 当前用满 68%</div></div><span class="link" data-act="go" data-page="invCost">去测算 ›</span></div></div>';
+    var ledger = '<div class="card"><div class="between"><div style="flex:1"><div style="font-size:14px;font-weight:600">🗂 商户台账</div><div class="hint" style="margin-top:4px">156 户 · 已协商 104 户 · 待协商 33 户</div></div><span class="link" data-act="go" data-page="invLedger">全部商户 ›</span></div></div>';
+    return '<div class="body-pad"><div class="banner inv"><div class="b-t">' + D.project.name + '</div><div class="b-s">施工期' + D.project.period + ' · 数据定期更新</div><div class="b-tags">' + tagHtml('light', D.project.phase) + tagHtml('light', '受影响商户 156') + '</div></div>' + grid + stats + risk + cost + ledger + '<div class="footnote">数据来源于评估模型演示，正式环境接入真实台账</div></div>';
+  }
+};
+
+P.invMap = {
+  title: '风险地图',
+  tab: 'map',
+  html: function () {
+    var riskList = D.riskTop.map(function (r) {
+      return '<div class="item"><div class="mark" style="background:' + r.c + '">' + r.n + '</div><div style="flex:1"><div class="i-name">' + r.name + '</div><div class="i-sub">' + r.s + '</div></div><div class="i-sub" style="color:' + r.c + ';font-weight:600">' + r.loss + '</div></div>';
+    }).join('');
+    var ind = D.industryRisk.map(function (x) {
+      return '<div class="item"><div style="flex:1"><div class="i-name">' + x.name + '</div><div class="i-sub">' + x.s + '</div></div><div class="i-sub" style="color:' + x.c + ';font-weight:600">' + x.tail + '</div></div>';
+    }).join('');
+    return '<div class="body-pad">' +
+      '<div class="card"><div class="card-title"><span>风险分布</span></div><div class="map-block">' + mapSvgRisk() + '</div><div class="legend">' +
+      '<div class="lg"><span class="dot-s core" style="background:#DC2626"></span>高风险</div><div class="lg"><span class="dot-s mid" style="background:#F59E0B"></span>中风险</div><div class="lg"><span class="dot-s out" style="background:#3B82F6"></span>低风险</div>' +
+      '</div><div class="hint" style="margin-top:10px">红点为高风险商户点位，优先安排协商；展示示意，正式环境接入 GIS 底图。</div></div>' +
+      '<div class="card"><div class="card-title"><span>高风险 Top 3</span><span class="more">按预估损失排序</span></div>' + riskList + '</div>' +
+      '<div class="card"><div class="card-title"><span>业态风险分布</span></div>' + ind + '</div>' +
+      '<button class="btn" data-act="go" data-page="invLedger">查看商户台账</button>' +
+      '</div>';
+  }
+};
+
+P.invCost = {
+  title: '责任成本测算',
+  tab: null,
+  html: function () {
+    var items = D.costItems.map(function (it) {
+      return '<div class="item"><div style="flex:1"><div class="i-name">' + it.name + '</div><div class="i-sub">' + it.s + '</div></div><div class="i-tail">' + it.tail + '</div></div>';
+    }).join('');
+    var share = D.costShare.map(function (sc) {
+      return '<div class="metric"><div class="v ' + sc.cls + '">' + sc.v + '</div><div class="k">' + sc.k + '</div><div class="d">' + sc.sub + '</div></div>';
+    }).join('');
+    return '<div class="body-pad">' +
+      '<div class="card"><div class="card-title"><span>责任成本总体预算</span></div><div class="between"><div class="ft-v" style="font-size:26px;font-weight:800;color:#1E5AA8">' + D.costTotal.v + '</div><div style="text-align:right"><div class="hint">' + D.costTotal.range + '</div><div class="hint" style="margin-top:3px">' + D.costTotal.conf + '</div></div></div>' +
+      '<div class="progress" style="margin-top:12px"><div class="track"><div class="fill" style="width:' + D.costTotal.ratio + '%"></div></div><div class="hint" style="margin-top:6px">已锁定 ' + D.costTotal.ratio + '%（按协商签约与评估进度）</div></div></div>' +
+      '<div class="card"><div class="card-title"><span>成本构成</span></div>' + items + '</div>' +
+      '<div class="card"><div class="card-title"><span>三方共担比例</span><span class="more">按政策指引分摊</span></div><div class="metric-grid">' + share + '</div><div class="hint" style="margin-top:10px">比例可由沙盒模拟后调整，最终以协商签约为准。</div></div>' +
+      '<div class="card" style="background:#F0FDF4;border:1px solid #BBF7D0"><div class="hint" style="color:#166534">💡 组合方案较单一定向回租方案预计可降低总成本约 4%，详见政策工具箱。</div></div>' +
+      '<button class="btn ghost" data-act="go" data-page="invTools">打开政策工具箱</button>' +
+      '</div>';
+  }
+};
+
+P.invTools = {
+  title: '政策工具箱',
+  tab: 'tools',
+  html: function () {
+    var rows = D.toolsCompare.map(function (t) {
+      return '<div class="row' + (t.best ? ' best' : '') + '"><div class="tc c1">' + t.name + (t.best ? ' ✓推荐' : '') + '</div><div class="tc">¥' + t.cost + '万</div><div class="tc">' + t.close + '</div><div class="tc">' + t.stay + '</div><div class="tc">' + t.time + '</div></div>';
+    }).join('');
+    return '<div class="body-pad">' +
+      '<div class="card total-card"><div class="total-ring"><div class="total-inner"><div class="total-v">8.1%</div><div class="total-k">组合方案闭店率</div></div></div>' +
+      '<div class="hint" style="margin-top:12px;text-align:center">较单政策中位数 -1.1pp · 商户留存 90%</div></div>' +
+      '<div class="card"><div class="card-title"><span>政策组合对比</span><span class="more">单位：万元 / 施工期</span></div>' +
+      '<div style="overflow-x:auto"><div class="tbl"><div class="tbl-row tbl-head"><div class="tc c1">方案</div><div class="tc">成本</div><div class="tc">闭店率</div><div class="tc">留存率</div><div class="tc">工期</div></div>' + rows + '</div></div>' +
+      '<div class="hint" style="margin-top:10px">组合方案结合分段施工、预留便道与定向回租，综合表现最优。各方案基于近期调研参数模拟。</div></div>' +
+      '<div class="card"><div class="card-title"><span>配套政策参考</span></div><div class="pill">纾困补贴申领指引（商户端）</div><div class="pill">租金缓缴办理流程说明</div><div class="pill">定向回租签约模板（含复核条款）</div></div>' +
+      '<button class="btn ghost" data-act="toast" data-tip="演示：导出方案对比报告">导出对比报告</button>' +
+      '</div>';
+  }
+};
+
+P.invLedger = {
+  title: '商户台账',
+  tab: null,
+  html: function () {
+    var f = cur().lf || '全部';
+    var chips = ['全部', '未协商', '协商中', '已签约'].map(function (x) {
+      return '<div class="chip' + (x === f ? ' on' : '') + '" data-act="filterLedger" data-v="' + x + '">' + x + '</div>';
+    }).join('');
+    var list = D.ledger.filter(function (it) { return f === '全部' || it.tag === f }).map(function (it) {
+      return '<div class="item"><div class="mark mark-' + it.cls + '">' + it.mark + '</div><div style="flex:1"><div class="i-name">' + it.name + '</div><div class="i-sub">' + it.s + '</div></div>' + tagHtml(it.tagCls, it.tag) + '</div>';
+    }).join('');
+    return '<div class="chips">' + chips + '</div><div class="body-pad" style="padding-top:0">' +
+      '<div class="card"><div class="metric-grid">' +
+      D.ledgerStats.map(function (m) { return metricHtml(m.v, m.k) }).join('') +
+      '</div></div>' +
+      '<div class="card">' + (list || '<div class="hint">该状态下暂无商户</div>') + '</div>' +
+      '<button class="btn ghost" data-act="toast" data-tip="演示：导出台账">导出台账</button>' +
+      '</div>';
+  }
+};
+
+/* ===== 政府端 ===== */
+P.govHome = {
+  title: '辖区总览',
+  tab: 'home',
+  html: function () {
+    var metrics = '<div class="card"><div class="card-title"><span>全市指标</span><span class="more">数据定期更新</span></div><div class="metric-grid">' +
+      D.govMetrics.map(function (m) { return metricHtml(m.v, m.k, m.d, m.cls) }).join('') +
+      '</div></div>';
+    var warn = '<div class="card" style="border:1px solid #FECACA"><div class="between"><div class="card-title" style="margin:0"><span style="color:#DC2626">风险提醒</span></div><span class="link" data-act="go" data-page="govWatch">查看全部 ›</span></div>' +
+      D.warnings.map(function (w) {
+        return '<div class="item"><div class="mark mark-' + (w.mark === '危' ? 'high' : 'mid') + '">' + w.mark + '</div><div style="flex:1"><div class="i-name">' + w.name + '</div><div class="i-sub">' + w.s + '</div></div>' + tagHtml(w.cls, w.tag) + '</div>';
+      }).join('') + '</div>';
+    var proj = '<div class="card"><div class="card-title"><span>在管项目</span><span class="more" style="cursor:pointer" data-act="go" data-page="govMap">全部项目 ›</span></div>' +
+      D.govProjects.map(function (p) {
+        return '<div class="item"><div class="i-no">' + p.n + '</div><div style="flex:1"><div class="i-name">' + p.name + '</div><div class="i-sub">' + p.s + '</div></div>' + tagHtml(p.cls, p.tag) + '</div>';
+      }).join('') + '</div>';
+    return '<div class="body-pad"><div class="banner gov"><div class="b-t">城市更新办</div><div class="b-s">政府端 · 城市更新权益保障平台</div><div class="b-tags">' + tagHtml('light', '在管项目 3') + tagHtml('light', '受影响商户 1,284') + '</div></div>' + metrics + warn + proj + '<div class="footnote">演示数据，正式环境以政务台账为准</div></div>';
+  }
+};
+
+P.govMap = {
+  title: '项目地图',
+  tab: null,
+  html: function () {
+    return '<div class="body-pad">' +
+      '<div class="card"><div class="card-title"><span>更新项目分布</span></div><div class="map-block">' + mapSvgProjects() + '</div><div class="legend">' +
+      '<div class="lg"><span class="dot-s core" style="background:#F59E0B"></span>施工中</div><div class="lg"><span class="dot-s mid" style="background:#3B82F6"></span>协商期</div><div class="lg"><span class="dot-s out" style="background:#16A34A"></span>建成</div>' +
+      '</div><div class="hint" style="margin-top:10px">点击项目点位可查看详情；展示示意，正式环境接入 GIS 底图与围挡矢量图层。</div></div>' +
+      '<div class="card"><div class="card-title"><span>项目清单</span></div>' +
+      D.govProjects.map(function (p) {
+        return '<div class="item"><div class="i-no">' + p.n + '</div><div style="flex:1"><div class="i-name">' + p.name + '</div><div class="i-sub">' + p.s + '</div></div>' + tagHtml(p.cls, p.tag) + '</div>';
+      }).join('') + '</div>' +
+      '<div class="card" style="background:#FFF7ED;border:1px solid #FED7AA"><div class="hint" style="color:#9A3412">📌 洪楼1905 项目围挡调整方案已公示，请城市更新办专班本周内完成 9 户高风险商户首轮协商。</div></div>' +
+      '</div>';
+  }
+};
+
+P.govFund = {
+  title: '资金管理',
+  tab: 'fund',
+  html: function () {
+    return '<div class="body-pad">' +
+      '<div class="card fund-total"><div class="between"><div><div class="ft-v">¥2,860万</div><div class="ft-k">更新补偿专项资金（本年度）</div></div>' + tagHtml('light', '已拨付 41%') + '</div>' +
+      '<div class="progress" style="background:rgba(255,255,255,.25);margin-top:14px"><div class="track" style="background:rgba(255,255,255,.25)"><div class="fill" style="background:#fff;width:41%"></div></div></div>' +
+      '<div class="between" style="margin-top:8px"><span class="hint" style="color:rgba(255,255,255,.85)">已拨付 ¥1,173万</span><span class="hint" style="color:rgba(255,255,255,.85)">剩余 ¥1,687万</span></div></div>' +
+      '<div class="card"><div class="card-title"><span>待办事项</span></div>' +
+      D.fundEdges.map(function (e) {
+        return '<div class="item" data-act="toast" data-tip="演示：待办详情页未接入"><div class="mark mark-mid">待</div><div style="flex:1"><div class="i-name" style="font-size:13px">' + e + '</div></div><span class="chev">›</span></div>';
+      }).join('') + '</div>' +
+      '<div class="card"><div class="card-title"><span>拨付进度</span></div>' +
+      D.fundRows.map(function (r) {
+        return '<div class="item"><div style="flex:1"><div class="i-name" style="font-size:13px">' + r.name + '</div><div class="i-sub">' + r.s + '</div></div>' + tagHtml(r.cls, r.tag) + '</div>';
+      }).join('') + '</div>' +
+      '<button class="btn ghost" data-act="toast" data-tip="演示：导出资金使用公示">导出资金公示</button>' +
+      '</div>';
+  }
+};
+
+P.govSandbox = {
+  title: '政策沙盒',
+  tab: 'sandbox',
+  html: function () {
+    var mx = cur().mx || [0, 2];
+    var strat = [
+      { n: '1', name: '扩围租金支持至 300m', s: '新增受惠商户约 180 户' },
+      { n: '2', name: '定向回租比例 10%→15%', s: '核心圈商户租金再降' },
+      { n: '3', name: '快速核赔 5 个工作日', s: '审批时效承诺' },
+      { n: '4', name: '经营恢复专项基金', s: '建成后 6 个月跟踪帮扶' }
+    ];
+    var picks = strat.map(function (st, i) {
+      var on = mx.indexOf(i) >= 0;
+      return '<div class="pick-item' + (on ? ' on' : '') + '" data-act="sandboxPick" data-v="' + i + '"><span>' + st.n + '. ' + st.name + '</span><span>' + st.s + '</span>' + (on ? '✓' : '') + '</div>';
+    }).join('');
+    return '<div class="body-pad">' +
+      '<div class="card"><div class="between"><div class="card-title" style="margin:0"><span>政策效果预演</span></div>' + tagHtml('info', '模拟模式') + '</div><div class="hint" style="margin-top:4px">选择政策组合（最多 2 项），实时比较闭店率、留存率与年度财政成本。</div></div>' +
+      '<div class="card"><div class="card-title"><span>可选政策</span></div><div class="pick" id="sandboxPicks">' + picks + '</div></div>' +
+      '<div class="card"><div class="card-title"><span>预演指标</span></div><div class="metric-grid">' +
+      D.sandboxMetrics.map(function (m) { return metricHtml(m.v, m.k, m.d, m.cls) }).join('') +
+      '</div><div class="hint" style="margin-top:10px">基于辖区历史参数与商户特征构建的演示模型，仅供决策参考。</div></div>' +
+      '<div class="card" style="background:#EAF1FA;border:1px solid #C9D8EE"><div class="row" style="gap:8px"><span style="font-size:16px">💡</span><div><div style="font-size:13px;font-weight:600">沙盒建议</div><div class="hint" style="margin-top:3px">模拟结果推荐组合：定向回租比例提升 + 快速核赔承诺，可在成本增幅 3% 内进一步降低闭店率。</div></div></div></div>' +
+      '<div class="between" style="gap:10px"><button class="btn ghost" style="flex:1;margin-top:0" data-act="resetSandbox">重置</button><button class="btn" style="flex:1;margin-top:0" data-act="toast" data-tip="演示：已生成政策建议报送稿">生成建议稿</button></div>' +
+      '</div>';
+  }
+};
+
+P.govWatch = {
+  title: '舆情监测',
+  tab: null,
+  html: function () {
+    var f = cur().wf || '分类';
+    var chips = ['分类', '施工影响', '补偿/补贴', '政策咨询'].map(function (x) {
+      return '<div class="chip' + (x === f ? ' on' : '') + '" data-act="filterWatch" data-v="' + x + '">' + x + '</div>';
+    }).join('');
+    var stats = D.watchStats.filter(function (w) { return f === '分类' || w.name.indexOf(f) >= 0 }).map(function (w) {
+      return '<div class="item"><div class="i-no">' + w.n + '</div><div style="flex:1"><div class="i-name">' + w.name + '</div><div class="i-sub">' + w.s + '</div><div class="w-track"><div class="w-fill" style="width:' + w.tail + ';background:#1E5AA8"></div></div></div><div class="i-tail">' + w.tail + '</div></div>';
+    }).join('');
+    var rank = D.watchRank.map(function (r) {
+      return '<div class="item"><div class="i-no">' + r.n + '</div><div style="flex:1"><div class="i-name">' + r.name + '</div><div class="i-sub">' + r.s + '</div></div>' + tagHtml(r.cls, r.tag) + '</div>';
+    }).join('');
+    return '<div class="chips">' + chips + '</div><div class="body-pad" style="padding-top:0">' +
+      '<div class="card"><div class="card-title"><span>诉求分类</span><span class="more">7 日内 · 共 128 件</span></div>' + (stats || '<div class="hint">当前分类暂无数据</div>') + '</div>' +
+      '<div class="card"><div class="card-title"><span>街镇协商率排行</span><span class="more">目标 ≥70%</span></div>' + rank + '</div>' +
+      '<div class="card" style="background:#FFF7ED;border:1px solid #FED7AA"><div class="hint" style="color:#9A3412">📢 近 7 日「补偿/补贴」类诉求环比上升 6%，多为流程时长与标准透明度咨询，建议在商户端补充进度可视能力（已在产品路线图中）。</div></div>' +
+      '</div>';
+  }
+};
+
+/* ===== 公共模块 ===== */
+P.news = {
+  title: '消息通知',
+  tab: null,
+  html: function () {
+    return '<div class="body-pad">' +
+      '<div class="card"><div class="card-title"><span>全部消息</span><span class="more" style="cursor:pointer" data-act="readAll">全部已读</span></div>' +
+      D.newsList.filter(function (n) { return !n.roles || n.roles.indexOf(S.role) >= 0 }).map(function (n) {
+        return '<div class="item"><div style="flex:1"><div class="i-name" style="font-size:13px">' + n.t + '</div><div class="i-sub">' + n.s + '</div></div>' + tagHtml(n.cls, n.tag) + '</div>';
+      }).join('') + '</div>' +
+      '<div class="card"><div class="card-title"><span>订阅管理</span></div>' +
+      D.subscriptions.map(function (sub) {
+        return '<div class="svc" data-act="toast" data-tip="演示：订阅设置页未接入"><div class="sub-mark">' + sub.mark + '</div><div class="grow"><div class="svc-name">' + sub.name + '</div><div class="hint" style="margin-top:2px">' + sub.s + '</div></div>' + tagHtml(sub.cls, sub.tag) + '</div>';
+      }).join('') + '</div>' +
+      '<div class="card" style="background:#EAF1FA;border:1px solid #C9D8EE"><div class="hint">🔔 重要变更将通过服务通知触达；短信订阅请在「我的-设置」中管理。</div></div>' +
+      '</div>';
+  }
+};
+
+P.profile = {
+  title: '我的',
+  tab: 'profile',
+  html: function () {
+    var u = S.user;
+    var isM = S.role === 'merchant';
+    var roleName = u ? (isM ? u.name + ' · 商户' : u.name) : '游客（未登录）';
+    var sub = !u ? '游客模式 · 仅可浏览公开信息'
+      : isM ? u.district + ' · ' + ringOf(u.distance).name + ' · ' + u.business
+      : u.scope;
+    var avatar = { merchant: '店', investor: '投', gov: '政' }[S.role] || '游';
+    var me = '<div class="card"><div class="me-card"><div class="me-avatar">' + avatar + '</div><div class="grow"><div class="me-name">' + roleName + '</div><div class="hint" style="margin-top:4px">' + sub + '</div></div></div></div>';
+    var rows = '';
+    if (isM) rows +=
+      '<div class="svc" data-act="go" data-page="applyProgress"><div class="svc-ico">📄</div><div class="grow"><div class="svc-name">我的申请</div></div><span class="chev">›</span></div>' +
+      '<div class="svc" data-act="go" data-page="consult"><div class="svc-ico">💬</div><div class="grow"><div class="svc-name">协商与申诉</div></div><span class="chev">›</span></div>' +
+      '<div class="svc" data-act="go" data-page="news"><div class="svc-ico">🔔</div><div class="grow"><div class="svc-name">消息通知</div></div><span class="chev">›</span></div>';
+    rows +=
+      '<div class="svc" data-act="toast" data-tip="演示：查看隐私与授权说明"><div class="svc-ico">🔒</div><div class="grow"><div class="svc-name">隐私与授权</div></div><span class="chev">›</span></div>' +
+      '<div class="svc" data-act="toast" data-tip="版本 v2.6.0（演示版）"><div class="svc-ico">ℹ</div><div class="grow"><div class="svc-name">关于我们</div></div><span class="chev">›</span></div>';
+    var svc = '<div class="card">' + rows + '</div>';
+    var legal = '<div class="card"><div class="card-title"><span>政策与依据</span></div><div class="hint">城市更新相关条例、征收补偿相关法规、《个人信息保护法》及配套办法。平台数据用于权益评估、补偿办理与监督公示。</div></div>';
+    return '<div class="body-pad">' + me + svc + legal +
+      '<button class="btn ghost" data-act="logout" style="color:#DC2626;border-color:#FECACA">' + (S.role === 'guest' ? '选择身份' : '切换身份') + '</button>' +
+      '<div class="footnote">城市更新权益保障平台 · 演示版</div>' +
+      '</div>';
+  }
+};
+
+/* ========== 导航与渲染 ========== */
+var TABS = {
+  merchant: [
+    { key: 'home', label: '首页', ico: '⌂', page: 'marketHome' },
+    { key: 'construction', label: '施工', ico: '▣', page: 'construction' },
+    { key: 'policy', label: '政策', ico: '▤', page: 'policyList' },
+    { key: 'profile', label: '我的', ico: '◉', page: 'profile' }
+  ],
+  investor: [
+    { key: 'home', label: '总览', ico: '⌂', page: 'invHome' },
+    { key: 'map', label: '风险', ico: '◍', page: 'invMap' },
+    { key: 'tools', label: '工具箱', ico: '⚒', page: 'invTools' },
+    { key: 'profile', label: '我的', ico: '◉', page: 'profile' }
+  ],
+  gov: [
+    { key: 'home', label: '总览', ico: '⌂', page: 'govHome' },
+    { key: 'fund', label: '资金', ico: '¥', page: 'govFund' },
+    { key: 'sandbox', label: '沙盒', ico: '◈', page: 'govSandbox' },
+    { key: 'profile', label: '我的', ico: '◉', page: 'profile' }
+  ],
+  guest: [
+    { key: 'construction', label: '施工公示', ico: '▣', page: 'construction' },
+    { key: 'policy', label: '政策公示', ico: '▤', page: 'policyList' },
+    { key: 'profile', label: '我的', ico: '◉', page: 'profile' }
+  ]
+};
+
+var view = document.getElementById('view');
+var tabbarEl = document.getElementById('tabbar');
+
+function cur(){ return S.stack[S.stack.length - 1] }
+function render(){
+  var c = cur();
+  var pg = P[c.page];
+  /* 身份选择页自带大标题，隐藏顶栏避免重复；其余页面正常显示 */
+  document.getElementById('hdr').style.display = (c.page === 'role') ? 'none' : '';
+  document.getElementById('title').textContent = pg.title;
+  document.getElementById('back').style.display = S.stack.length > 1 ? 'block' : 'none';
+  view.innerHTML = pg.html(c);
+  if (pg.after) pg.after(c);
+  renderTab();
+  view.scrollTop = 0;
+}
+function renderTab(){
+  var c = cur();
+  var pg = P[c.page];
+  var tabs = TABS[S.role] || [];
+  if (!pg.tab || !tabs.length) { tabbarEl.style.display = 'none'; tabbarEl.innerHTML = ''; return }
+  tabbarEl.style.display = 'flex';
+  tabbarEl.innerHTML = tabs.map(function (t) {
+    return '<div class="tab' + (t.key === pg.tab ? ' on' : '') + '" data-act="tab" data-key="' + t.key + '"><span class="ico">' + t.ico + '</span><span>' + t.label + '</span></div>';
+  }).join('');
+}
+/* 游客无身份，不能进入需要账号的功能页 */
+var NEED_LOGIN = { calc: 1, loss: 1, apply: 1, applyProgress: 1, consult: 1, bind: 1 };
+function go(page){
+  if (S.role === 'guest' && NEED_LOGIN[page]) { toast('请先选择身份后再使用该功能'); return }
+  S.stack.push({ page: page }); render()
+}
+function back(){ if (S.stack.length > 1) { S.stack.pop(); render() } }
+function switchTab(page){ S.stack = [{ page: page }]; render() }
+function replace(page){ S.stack[S.stack.length - 1] = { page: page }; render() }
+
+var toastTimer = null;
+function toast(text){
+  var old = document.querySelector('.toast');
+  if (old) old.remove();
+  var t = document.createElement('div');
+  t.className = 'toast';
+  t.textContent = text;
+  document.getElementById('wrap').appendChild(t);
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(function(){ t.remove() }, 1600);
+}
+function modal(title, content, onOk){
+  var m = document.createElement('div');
+  m.className = 'mask';
+  m.innerHTML = '<div class="modal"><div class="md-title">' + title + '</div><div class="md-content">' + content + '</div><div class="md-btns"><button class="btn ghost" id="mdCancel">取消</button><button class="btn" id="mdOk">确定</button></div></div>';
+  m.addEventListener('click', function (e) {
+    if (e.target.id === 'mdCancel' || e.target === m) { m.remove(); return }
+    if (e.target.id === 'mdOk') { m.remove(); onOk && onOk() }
+  });
+  document.getElementById('wrap').appendChild(m);
+}
+
+/* ========== 动作分发 ========== */
+var ACTS = {
+  back: function(){ back() },
+  tab: function (t) {
+    var tabs = TABS[S.role] || [];
+    for (var i = 0; i < tabs.length; i++) if (tabs[i].key === t.getAttribute('data-key')) { switchTab(tabs[i].page); return }
+  },
+  choose: function (t) {
+    var role = t.getAttribute('data-role');
+    /* 同一身份已绑定：直接进入，不重复绑定 */
+    if (S.user && S.role === role && role !== 'guest') {
+      switchTab(role === 'merchant' ? 'marketHome' : role === 'investor' ? 'invHome' : 'govHome');
+      return;
+    }
+    newSession(role);
+    if (role === 'guest') { switchTab('construction'); toast('游客模式：仅可浏览公开信息'); return }
+    if (role === 'merchant') { go('bind'); return }
+    var acc = D.accounts[role];
+    var extra = role === 'investor' ? '<br>绑定项目：' + D.project.name + '（' + D.project.code + '）' : '';
+    modal('确认识别身份', '以「' + acc.name + '」身份进入？' + extra + '<br>本演示不接入真实账号体系。', function () {
+      S.user = acc;
+      switchTab(role === 'investor' ? 'invHome' : 'govHome');
+      toast('已进入 ' + acc.name);
+    });
+  },
+  go: function (t) { go(t.getAttribute('data-page')) },
+  toast: function (t) { toast(t.getAttribute('data-tip')) },
+  /* ---- 商户端 ---- */
+  filterPolicy: function (t) { cur().filter = t.getAttribute('data-v'); render() },
+  seg: function (t) { cur().seg = t.getAttribute('data-v'); render() },
+  biz: function (t) { calcState.biz = t.getAttribute('data-v'); syncUser(); render() },
+  pickDistrict: function (t) { bindDistrict = t.getAttribute('data-v'); render() },
+  submitBind: function (t) {
+    if (!bindName.trim()) { toast('请填写店铺名称'); return }
+    S.user = makeMerchantUser();
+    switchTab('marketHome');
+    toast('绑定成功，欢迎使用');
+  },
+  submitCalc: function () { go('apply') },
+  pickApply: function (t) { cur().policyIdx = Number(t.getAttribute('data-v')); render() },
+  pickPeriod: function (t) { cur().periodIdx = Number(t.getAttribute('data-v')); render() },
+  submitApply: function (t) {
+    var idx = cur().policyIdx || 0;
+    var name = APPLY_POLICIES[idx] || APPLY_POLICIES[0];
+    modal('提交申请', '确认提交「' + name + '」申请？提交后 5 个工作日内反馈审批结果。', function () {
+      S.apply = { policy: name, quote: assess() };
+      replace('applyProgress');
+      toast('申请已提交');
+    });
+  },
+  /* ---- 投资方端 ---- */
+  filterLedger: function (t) { cur().lf = t.getAttribute('data-v'); render() },
+  /* ---- 政府端 / 公共 ---- */
+  filterWatch: function (t) { cur().wf = t.getAttribute('data-v'); render() },
+  sandboxPick: function (t) {
+    if (!cur().mx) cur().mx = [0, 2];
+    var mx = cur().mx;
+    var v = Number(t.getAttribute('data-v'));
+    var i = mx.indexOf(v);
+    if (i >= 0) mx.splice(i, 1);
+    else { if (mx.length >= 2) { toast('最多选择 2 项政策，请先取消一项'); return } mx.push(v); }
+    cur().mx = mx;
+    render();
+  },
+  resetSandbox: function () { cur().mx = [0, 2]; render(); toast('已重置为推荐组合') },
+  readAll: function () {
+    D.newsList.forEach(function (n) { n.tag = '已读'; n.cls = 'gray' });
+    render();
+    toast('已全部标记为已读');
+  },
+  logout: function (t) {
+    modal('切换身份', '确定切换当前身份？可随时重新选择身份进入。', function () {
+      switchTab('role');
+      toast('已返回身份选择');
+    });
+  }
+};
+
+var wrapEl = document.getElementById('wrap');
+wrapEl.addEventListener('click', function (e) {
+  var t = e.target.closest('[data-act]');
+  if (!t) return;
+  var act = t.getAttribute('data-act');
+  if (ACTS[act]) ACTS[act](t, e);
+});
+
+wrapEl.addEventListener('input', function (e) {
+  var t = e.target;
+  if (t.dataset.input === 'bindName') {
+    bindName = t.value;
+    var sb = document.getElementById('bindSubmit');
+    if (sb) sb.disabled = !bindName.trim();
+    return;
+  }
+  if (t.dataset.input === 'bindPhone') { bindPhone = t.value; return }
+  if (t.dataset.input === 'calcArea') { calcState.area = t.value; syncUser(); refreshCalc(); return }
+  if (t.dataset.input === 'calcRev') { calcState.rev = t.value; syncUser(); refreshCalc(); return }
+  if (t.dataset.range === 'calcDist') {
+    calcState.dist = Number(t.value);
+    var dv = document.getElementById('calcDistVal');
+    if (dv) dv.textContent = calcState.dist + 'm';
+    syncUser();
+    refreshCalc();
+    return;
+  }
+});
+
+/* ========== 启动 ========== */
+S.stack = [{ page: 'role' }];
+render();
+</script>
+</body>
+</html>
